@@ -93,7 +93,7 @@
     </sap:WorkflowViewStateService.ViewState>
     <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="470,819" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
-        <ui:AddQueueItem ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Add Queue Item" FolderPath="Shared" sap:VirtualizedContainerService.HintSize="468,196" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="ConocoPhillips_Files" Reference="[in_OriginalFileName]">
+        <ui:AddQueueItem ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Add Queue Item" FolderPath="Conoco" sap:VirtualizedContainerService.HintSize="468,196" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="ConocoPhillipsFiles" Reference="[in_OriginalFileName]">
           <ui:AddQueueItem.ItemInformation>
             <InArgument x:TypeArguments="x:String" x:Key="FullPath">[in_SplittedFileFullPath]</InArgument>
             <InArgument x:TypeArguments="x:String" x:Key="VariantionAsset">[in_VariantionAsset]</InArgument>
