@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="PDF_SplitPages" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/ocr" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Drawing;assembly=System.Drawing.Common" xmlns:sd1="clr-namespace:System.Drawing;assembly=System.Drawing.Primitives" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upap="clr-namespace:UiPath.PDF.Activities.PDF;assembly=UiPath.PDF.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="PDF_SplitPages" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upap="clr-namespace:UiPath.PDF.Activities.PDF;assembly=UiPath.PDF.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_TransactionItem" Type="InArgument(x:String)" />
     <x:Property Name="in_OriginalName" Type="InArgument(x:String)" />
@@ -107,7 +107,7 @@
       <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="PDF_SplitPages" sap:VirtualizedContainerService.HintSize="1653,1994" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="PDF_SplitPages" sap:VirtualizedContainerService.HintSize="1653,1527" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="FileName" />
       <Variable x:TypeArguments="x:String" Name="QueuedFolderPath" />
@@ -175,13 +175,13 @@
       </If.Else>
     </If>
     <upap:GetPDFPageCount DisplayName="Get PDF Page Count" FileName="[in_TransactionItem]" sap:VirtualizedContainerService.HintSize="479,114" sap2010:WorkflowViewState.IdRef="GetPDFPageCount_2" PageCount="[Pages]" />
-    <ui:ForEach x:TypeArguments="x:Int32" CurrentIndex="{x:Null}" DisplayName="For Each Page" sap:VirtualizedContainerService.HintSize="479,983" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Enumerable.Range(2, Pages)]">
+    <ui:ForEach x:TypeArguments="x:Int32" CurrentIndex="{x:Null}" DisplayName="For Each Page" sap:VirtualizedContainerService.HintSize="479,516" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Enumerable.Range(1, Pages)]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:Int32">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:Int32" Name="Page" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="452,862" sap2010:WorkflowViewState.IdRef="Sequence_5">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="416,395" sap2010:WorkflowViewState.IdRef="Sequence_5">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:String" Name="FirstPage" />
             </Sequence.Variables>
@@ -190,45 +190,15 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:ReadPDFWithOCR DegreeOfParallelism="-1" DisplayName="Read PDF With OCR" FileName="[FileName]" sap:VirtualizedContainerService.HintSize="418,189" sap2010:WorkflowViewState.IdRef="ReadPDFWithOCR_1" ImageDpi="150" Range="2-4" Text="[FirstPage]">
-              <ui:ReadPDFWithOCR.OCREngine>
-                <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd1:Rectangle, x:String))">
-                  <ActivityFunc.Argument>
-                    <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
-                  </ActivityFunc.Argument>
-                  <p:UiPathDocumentOCR Endpoint="{x:Null}" Output="{x:Null}" PredictionId="{x:Null}" Text="{x:Null}" UseLocalServer="{x:Null}" ApiKey="hq1dPaLmDtogO0HeQUYp6714MRMXQi50V+NuKbp9DtwNsK8a2zKS5fFPju545i4bq14FTfG+K3pT2HaWK9qe3A==" ComputeSkewAngle="False" DisplayName="UiPath Document OCR" ExtractWords="True" sap:VirtualizedContainerService.HintSize="300,25" sap2010:WorkflowViewState.IdRef="UiPathDocumentOCR_1" Image="[Image]" Language="auto" NoopExecution="False" Profile="None" Scale="1" Timeout="100000" />
-                </ActivityFunc>
-              </ui:ReadPDFWithOCR.OCREngine>
-            </ui:ReadPDFWithOCR>
-            <If Condition="[Not FirstPage.Contains(&quot;Address&quot;)]" sap:VirtualizedContainerService.HintSize="418,613" sap2010:WorkflowViewState.IdRef="If_3">
-              <If.Then>
-                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,395" sap2010:WorkflowViewState.IdRef="Sequence_8">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <upap:ExtractPDFPageRange DisplayName="Extract PDF Page Range" FileName="[in_TransactionItem]" sap:VirtualizedContainerService.HintSize="382,167" sap2010:WorkflowViewState.IdRef="ExtractPDFPageRange_2" OutputFileName="[VariantFolderPath + &quot;\&quot; + FileName + &quot;_&quot; + Page.ToString + &quot;.pdf&quot;]" Range="[Page.ToString]" />
-                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Orchestrator_UploadToQueue - Invoke Workflow File (Orchestrator_UploadToQueue.xaml)" sap:VirtualizedContainerService.HintSize="382,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Orchestrator_UploadToQueue.xaml">
-                    <ui:InvokeWorkflowFile.Arguments>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_SplittedFileFullPath">[VariantFolderPath + "\" + FileName + "_" + Page.ToString + ".pdf"]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_OriginalFileName">[in_OriginalName]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_VariantionAsset">[in_VariationAsset]</InArgument>
-                      <OutArgument x:TypeArguments="x:Boolean" x:Key="out_BoolUploadSucessFlag" />
-                    </ui:InvokeWorkflowFile.Arguments>
-                  </ui:InvokeWorkflowFile>
-                </Sequence>
-              </If.Then>
-              <If.Else>
-                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89" sap2010:WorkflowViewState.IdRef="Sequence_9">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </Sequence>
-              </If.Else>
-            </If>
+            <upap:ExtractPDFPageRange DisplayName="Extract PDF Page Range" FileName="[in_TransactionItem]" sap:VirtualizedContainerService.HintSize="382,167" sap2010:WorkflowViewState.IdRef="ExtractPDFPageRange_2" OutputFileName="[VariantFolderPath + &quot;\&quot; + FileName + &quot;_&quot; + Page.ToString + &quot;.pdf&quot;]" Range="[Page.ToString]" />
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Orchestrator_UploadToQueue - Invoke Workflow File (Orchestrator_UploadToQueue.xaml)" sap:VirtualizedContainerService.HintSize="382,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Orchestrator_UploadToQueue.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="in_SplittedFileFullPath">[VariantFolderPath + "\" + FileName + "_" + Page.ToString + ".pdf"]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_OriginalFileName">[in_OriginalName]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_VariantionAsset">[in_VariationAsset]</InArgument>
+                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_BoolUploadSucessFlag" />
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
           </Sequence>
         </ActivityAction>
       </ui:ForEach.Body>
