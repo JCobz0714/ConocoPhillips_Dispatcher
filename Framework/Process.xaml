@@ -124,7 +124,7 @@
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_TransactionItem">[in_TransactionItem]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_OriginalName">[System.IO.Path.GetFileName(in_TransactionItem)]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_QueuedFolderPath">[in_Config("QueuedFolderPath").ToString]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_QueuedFolderPath">[Environment.ExpandEnvironmentVariables(in_Config("QueuedFolderPath").ToString)]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_VariationAsset">[VariantAsset]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
