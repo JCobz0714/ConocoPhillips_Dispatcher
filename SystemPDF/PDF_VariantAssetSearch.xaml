@@ -113,7 +113,7 @@
       <AssemblyReference>System.Linq.Expressions</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="PDF_VariantAssetSearch" sap:VirtualizedContainerService.HintSize="1653,1172" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="PDF_VariantAssetSearch" sap:VirtualizedContainerService.HintSize="1780,4101" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="TextPdfOCR" />
       <Variable x:TypeArguments="x:String" Name="PdfCopy" />
@@ -123,7 +123,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ReadPDFWithOCR DegreeOfParallelism="-1" DisplayName="Read PDF With OCR" FileName="[in_PDFFilePath]" sap:VirtualizedContainerService.HintSize="416,189" sap2010:WorkflowViewState.IdRef="ReadPDFWithOCR_1" ImageDpi="150" Range="2-4" Text="[TextPdfOCR]">
+    <ui:ReadPDFWithOCR sap2010:Annotation.AnnotationText="Read the PDF file to get the info and then separate the file regarding the variant" DegreeOfParallelism="-1" DisplayName="Read PDF With OCR" FileName="[in_PDFFilePath]" sap:VirtualizedContainerService.HintSize="470,231" sap2010:WorkflowViewState.IdRef="ReadPDFWithOCR_1" ImageDpi="150" Range="2-4" Text="[TextPdfOCR]">
       <ui:ReadPDFWithOCR.OCREngine>
         <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd1:Rectangle, x:String))">
           <ActivityFunc.Argument>
@@ -132,22 +132,28 @@
           <p:UiPathDocumentOCR Endpoint="{x:Null}" Output="{x:Null}" PredictionId="{x:Null}" Text="{x:Null}" UseLocalServer="{x:Null}" ApiKey="hq1dPaLmDtogO0HeQUYp6714MRMXQi50V+NuKbp9DtwNsK8a2zKS5fFPju545i4bq14FTfG+K3pT2HaWK9qe3A==" ComputeSkewAngle="False" DisplayName="UiPath Document OCR" ExtractWords="True" sap:VirtualizedContainerService.HintSize="300,25" sap2010:WorkflowViewState.IdRef="UiPathDocumentOCR_1" Image="[Image]" Language="auto" NoopExecution="False" Profile="None" Scale="1" Timeout="100000" />
         </ActivityFunc>
       </ui:ReadPDFWithOCR.OCREngine>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
     </ui:ReadPDFWithOCR>
-    <If Condition="[TextPdfOCR.Contains(&quot;Hiland&quot;)]" DisplayName="If - Hiland" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_1">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;Hiland&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;Hiland&quot;)]" DisplayName="If - Hiland" sap:VirtualizedContainerService.HintSize="470,174" sap2010:WorkflowViewState.IdRef="If_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Assign sap:VirtualizedContainerService.HintSize="434,114" sap2010:WorkflowViewState.IdRef="Assign_1">
+          <Assign DisplayName="Assign - Variation asset" sap:VirtualizedContainerService.HintSize="434,114" sap2010:WorkflowViewState.IdRef="Assign_1">
             <Assign.To>
               <OutArgument x:TypeArguments="x:String">[out_VariantionAsset]</OutArgument>
             </Assign.To>
@@ -155,7 +161,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("Hiland").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_1" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_1">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -168,15 +180,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;OneOK&quot;)]" DisplayName="If - OneOK" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_18">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;OneOK&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;OneOK&quot;)]" DisplayName="If - OneOK" sap:VirtualizedContainerService.HintSize="470,174" sap2010:WorkflowViewState.IdRef="If_18">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_36">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_36">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -190,7 +203,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("OneOk").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_2" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_2">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -203,15 +222,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;DCPMIDSTREAM&quot;)]" DisplayName="If - DCP Eagleford" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_19">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;DCPMIDSTREAM&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;DCPMIDSTREAM&quot;)]" DisplayName="If - DCP Eagleford" sap:VirtualizedContainerService.HintSize="470,174" sap2010:WorkflowViewState.IdRef="If_19">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_38">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_38">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -225,7 +245,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("DCP-Eagleford").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_3" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_3">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -238,15 +264,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;EagleFord&quot;)]" DisplayName="If - Enterprise eagleford" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_20">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;EagleFord&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;EagleFord&quot;)]" DisplayName="If - Enterprise eagleford" sap:VirtualizedContainerService.HintSize="470,174" sap2010:WorkflowViewState.IdRef="If_20">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_40">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_40">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -260,7 +287,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("Enterprise-EPCO-EagleFord").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_4" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_4">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -273,15 +306,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;Yoakum&quot;)]" DisplayName="If - Enterprise Yoakum" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_21">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;Yoakum&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;Yoakum&quot;)]" DisplayName="If - Enterprise Yoakum" sap:VirtualizedContainerService.HintSize="470,174" sap2010:WorkflowViewState.IdRef="If_21">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_42">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_42">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -295,7 +329,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("Enterprise-EPCO-Yoakum").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_5" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_5">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -308,15 +348,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;Thomsonville&quot;)]" DisplayName="If - Enterprise Thomsonville" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_22">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;Thomsonville&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;Thomsonville&quot;)]" DisplayName="If - Enterprise Thomsonville" sap:VirtualizedContainerService.HintSize="470,174" sap2010:WorkflowViewState.IdRef="If_22">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_44">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_44">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -330,7 +371,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("Enterprise-EPCO-Thompsonville").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_6" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_6">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -343,15 +390,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;Energy Transfer&quot;)]" DisplayName="If - Energy Transfer" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_23">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;Energy Transfer&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;Energy Transfer&quot;)]" DisplayName="If - Energy Transfer" sap:VirtualizedContainerService.HintSize="470,174" sap2010:WorkflowViewState.IdRef="If_23">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_46">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_46">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -365,7 +413,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("EnergyTransfer").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_7" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_7">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -378,15 +432,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;COPANO PROCESSING&quot;)]" DisplayName="If - Copano" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_24">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;COPANO PROCESSING&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;COPANO PROCESSING&quot;)]" DisplayName="If - Copano" sap:VirtualizedContainerService.HintSize="470,189" sap2010:WorkflowViewState.IdRef="If_24">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_48">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_48">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -400,7 +455,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("Copano").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_8" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_8">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -413,15 +474,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;CARLSBAD GATHERING SYSTEM&quot;)]" DisplayName="If - Enterprise - CarlsBad" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_25">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;CARLSBAD GATHERING SYSTEM&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;CARLSBAD GATHERING SYSTEM&quot;)]" DisplayName="If - Enterprise - CarlsBad" sap:VirtualizedContainerService.HintSize="470,189" sap2010:WorkflowViewState.IdRef="If_25">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_50">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_50">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -435,7 +497,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("Enterprise-Carlsbad").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_9" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_9">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -448,15 +516,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;RSP PERMIAN LLC&quot;)]" DisplayName="If - Targa - LovingPlant" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_26">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;RSP PERMIAN LLC&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;RSP PERMIAN LLC&quot;)]" DisplayName="If - Targa - LovingPlant" sap:VirtualizedContainerService.HintSize="470,174" sap2010:WorkflowViewState.IdRef="If_26">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_52">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_52">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -470,7 +539,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("Targa-LovingPlant").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_10" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_10">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -483,15 +558,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;COG OPERATING LLC&quot;)]" DisplayName="If - Targa - SandHills" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_27">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;COG OPERATING LLC&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;COG OPERATING LLC&quot;)]" DisplayName="If - Targa - SandHills" sap:VirtualizedContainerService.HintSize="470,174" sap2010:WorkflowViewState.IdRef="If_27">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_54">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_54">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -505,7 +581,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("Targa-SandHills").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_11" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_11">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -518,15 +600,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;Versado Gas Processors, L.L.C.&quot;)]" DisplayName="If - Targa - SouthLea" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_28">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;Versado Gas Processor, L.L.C.&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;Versado Gas Processors, L.L.C.&quot;)]" DisplayName="If - Targa - SouthLea" sap:VirtualizedContainerService.HintSize="470,189" sap2010:WorkflowViewState.IdRef="If_28">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_56">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_56">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -540,7 +623,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("Targa-SouthLea").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_12" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_12">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -553,15 +642,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;Targa Pipeline Mid-Continent WestTEX LLC&quot;)]" DisplayName="If - Targa - WestTexas" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_29">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;Targa Pipeline Mid-Continent WestTEX LLC&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;Targa Pipeline Mid-Continent WestTEX LLC&quot;)]" DisplayName="If - Targa - WestTexas" sap:VirtualizedContainerService.HintSize="470,204" sap2010:WorkflowViewState.IdRef="If_29">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_58">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_58">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -575,7 +665,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("Targa-WestTexas").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_13" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_13">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -588,15 +684,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;Targa Northern Delaware LLC&quot;)]" DisplayName="If - Targa - Carlsbad" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_30">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;Targa Northern Delaware LLC&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;Targa Northern Delaware LLC&quot;)]" DisplayName="If - Targa - Carlsbad" sap:VirtualizedContainerService.HintSize="470,189" sap2010:WorkflowViewState.IdRef="If_30">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_60">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_60">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -610,7 +707,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("Targa-Carlsbad").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_14" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_14">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -623,15 +726,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;PERMIAN DELAWARE ENTERPRISES HOLDINGS LLC&quot;)]" DisplayName="If - Targa - Midstream" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_33">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;PERMIAN DELAWARE ENTERPRISES HOLDINGS LLC&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;PERMIAN DELAWARE ENTERPRISES HOLDINGS LLC&quot;)]" DisplayName="If - Targa - Midstream" sap:VirtualizedContainerService.HintSize="470,204" sap2010:WorkflowViewState.IdRef="If_33">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_66">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_66">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -645,7 +749,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("Targa-Midstream").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_17" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_17">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -658,15 +768,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;BENEDUM COMPLEX&quot;)]" DisplayName="If - WTG - SouthBenedum" sap:VirtualizedContainerService.HintSize="416,57" sap2010:WorkflowViewState.IdRef="If_31">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;BENEDUM COMPLEX&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;BENEDUM COMPLEX&quot;)]" DisplayName="If - WTG - SouthBenedum" sap:VirtualizedContainerService.HintSize="470,563" sap2010:WorkflowViewState.IdRef="If_31">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_62">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_62">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -680,7 +791,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("WTG-SouthBenedum").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_15" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_15">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>
@@ -693,15 +810,16 @@
         </Sequence>
       </If.Else>
     </If>
-    <If Condition="[TextPdfOCR.Contains(&quot;SALE RANCH GAS PLANT&quot;)]" DisplayName="If - WTG - SaleRanch" sap:VirtualizedContainerService.HintSize="416,48" sap2010:WorkflowViewState.IdRef="If_32">
+    <If sap2010:Annotation.AnnotationText="Checks if the variable holding the PDF file text contains any string with &quot;SALE RANCH GAS PLANT&quot;, and if it does, assigns the variant name to the argument &quot;out_VariantionAsset&quot;" Condition="[TextPdfOCR.Contains(&quot;SALE RANCH GAS PLANT&quot;)]" DisplayName="If - WTG - SaleRanch" sap:VirtualizedContainerService.HintSize="470,554" sap2010:WorkflowViewState.IdRef="If_32">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,222" sap2010:WorkflowViewState.IdRef="Sequence_64">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="468,279" sap2010:WorkflowViewState.IdRef="Sequence_64">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -715,7 +833,13 @@
               <InArgument x:TypeArguments="x:String">[in_Config("WTG-SaleRanch").ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:Return sap:VirtualizedContainerService.HintSize="434,48" sap2010:WorkflowViewState.IdRef="Return_16" />
+          <ui:Return sap2010:Annotation.AnnotationText="Finishes the current workflow to avoid finding other keywords in the file and make the process more complicated" sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Return_16">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Return>
         </Sequence>
       </If.Then>
       <If.Else>

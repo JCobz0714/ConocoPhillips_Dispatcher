@@ -107,7 +107,7 @@
       <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="PDF_SplitPages" sap:VirtualizedContainerService.HintSize="1653,1527" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="PDF_SplitPages" sap:VirtualizedContainerService.HintSize="1780,1750" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="FileName" />
       <Variable x:TypeArguments="x:String" Name="QueuedFolderPath" />
@@ -121,7 +121,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="479,173" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;Splitting PDF document...&quot;]" />
-    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="479,210" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+    <ui:MultipleAssign sap2010:Annotation.AnnotationText="Assigning the FileName to store the original file name without its file extension, QueuedFolderPath to save the file uploaded to the queue in another path and VariantFolderPath to store the new file path" DisplayName="Multiple Assign - Main variables" sap:VirtualizedContainerService.HintSize="479,267" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
       <ui:MultipleAssign.AssignOperations>
         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -150,9 +150,19 @@
           </ui:AssignOperation>
         </scg:List>
       </ui:MultipleAssign.AssignOperations>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
     </ui:MultipleAssign>
-    <ui:FolderExistsX DisplayName="Folder Exists" Exists="[FolderExists]" sap:VirtualizedContainerService.HintSize="479,165" sap2010:WorkflowViewState.IdRef="FolderExistsX_1" Path="[VariantFolderPath]" />
-    <If Condition="[FolderExists = False]" sap:VirtualizedContainerService.HintSize="479,326" sap2010:WorkflowViewState.IdRef="If_1">
+    <ui:FolderExistsX DisplayName="Folder Exists - Check if folder path exists" Exists="[FolderExists]" sap:VirtualizedContainerService.HintSize="479,165" sap2010:WorkflowViewState.IdRef="FolderExistsX_1" Path="[VariantFolderPath]" />
+    <If sap2010:Annotation.AnnotationText="If the file does not exists, it will create the file" Condition="[FolderExists = False]" DisplayName="If - checks if the file exists" sap:VirtualizedContainerService.HintSize="479,357" sap2010:WorkflowViewState.IdRef="If_1">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
       <If.Then>
         <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,163" sap2010:WorkflowViewState.IdRef="Sequence_3">
           <sap:WorkflowViewStateService.ViewState>
@@ -174,14 +184,20 @@
         </Sequence>
       </If.Else>
     </If>
-    <upap:GetPDFPageCount DisplayName="Get PDF Page Count" FileName="[in_TransactionItem]" sap:VirtualizedContainerService.HintSize="479,114" sap2010:WorkflowViewState.IdRef="GetPDFPageCount_2" PageCount="[Pages]" />
-    <ui:ForEach x:TypeArguments="x:Int32" CurrentIndex="{x:Null}" DisplayName="For Each Page" sap:VirtualizedContainerService.HintSize="479,516" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Enumerable.Range(1, Pages)]">
+    <upap:GetPDFPageCount sap2010:Annotation.AnnotationText="Gets the pages number the PDF has" DisplayName="Get PDF Page Count" FileName="[in_TransactionItem]" sap:VirtualizedContainerService.HintSize="479,145" sap2010:WorkflowViewState.IdRef="GetPDFPageCount_2" PageCount="[Pages]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upap:GetPDFPageCount>
+    <ui:ForEach x:TypeArguments="x:Int32" CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="Iterating through all the pages in order to split them" DisplayName="For Each Page" sap:VirtualizedContainerService.HintSize="479,620" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Enumerable.Range(1, Pages)]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:Int32">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:Int32" Name="Page" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="416,395" sap2010:WorkflowViewState.IdRef="Sequence_5">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="416,468" sap2010:WorkflowViewState.IdRef="Sequence_5">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:String" Name="FirstPage" />
             </Sequence.Variables>
@@ -190,18 +206,34 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <upap:ExtractPDFPageRange DisplayName="Extract PDF Page Range" FileName="[in_TransactionItem]" sap:VirtualizedContainerService.HintSize="382,167" sap2010:WorkflowViewState.IdRef="ExtractPDFPageRange_2" OutputFileName="[VariantFolderPath + &quot;\&quot; + FileName + &quot;_&quot; + Page.ToString + &quot;.pdf&quot;]" Range="[Page.ToString]" />
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Orchestrator_UploadToQueue - Invoke Workflow File (Orchestrator_UploadToQueue.xaml)" sap:VirtualizedContainerService.HintSize="382,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Orchestrator_UploadToQueue.xaml">
+            <upap:ExtractPDFPageRange sap2010:Annotation.AnnotationText="Extracting a page from the PDF" DisplayName="Extract PDF Page Range" FileName="[in_TransactionItem]" sap:VirtualizedContainerService.HintSize="382,198" sap2010:WorkflowViewState.IdRef="ExtractPDFPageRange_2" OutputFileName="[VariantFolderPath + &quot;\&quot; + FileName + &quot;_&quot; + Page.ToString + &quot;.pdf&quot;]" Range="[Page.ToString]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </upap:ExtractPDFPageRange>
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Invoking the UploadToQueue workflow to upload all the new paths for the splitted pages of the PDF" DisplayName="Orchestrator_UploadToQueue - Invoke Workflow File (Orchestrator_UploadToQueue.xaml)" sap:VirtualizedContainerService.HintSize="382,210" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Orchestrator_UploadToQueue.xaml">
               <ui:InvokeWorkflowFile.Arguments>
                 <InArgument x:TypeArguments="x:String" x:Key="in_SplittedFileFullPath">[VariantFolderPath + "\" + FileName + "_" + Page.ToString + ".pdf"]</InArgument>
                 <InArgument x:TypeArguments="x:String" x:Key="in_OriginalFileName">[in_OriginalName]</InArgument>
                 <InArgument x:TypeArguments="x:String" x:Key="in_VariantionAsset">[in_VariationAsset]</InArgument>
                 <OutArgument x:TypeArguments="x:Boolean" x:Key="out_BoolUploadSucessFlag" />
               </ui:InvokeWorkflowFile.Arguments>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
             </ui:InvokeWorkflowFile>
           </Sequence>
         </ActivityAction>
       </ui:ForEach.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
     </ui:ForEach>
   </Sequence>
 </Activity>
